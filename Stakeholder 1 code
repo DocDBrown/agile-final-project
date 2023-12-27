@@ -1,1 +1,43 @@
-S
+import SwiftUI
+
+
+struct Item: Identifiable {
+    var id: ObjectIdentifier
+    var name1: String = ""
+    var name2: String = ""
+    var name3: String = ""
+    
+}
+
+class Model {
+    var items = ["Lasagna", "Fettuccini", "Spaghetti", "Avo toast", "Tortellini", "Pizza"]
+    init(items: [String]) {
+        self.items = items
+    func menuItems() {
+        for item1 in self.items {
+            print(item1)
+        }
+        }
+    }
+}
+
+struct ContentView: View {
+    @State var model1 =  Model(items: <#String#>)
+    var body: some View {
+        VStack {
+            List{
+                Text(model1)
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                Text("Hello, world!")
+            }
+        }
+        .padding()
+    }
+}
+
+
+#Preview {
+    ContentView()
+}
