@@ -1,42 +1,50 @@
+//
+//  ContentView.swift
+//  ListDisplay
+//
+//  Created by Duncan Brown on 27/12/2023.
+//
+
 import SwiftUI
 
 
-struct Item: Identifiable {
-    var id: ObjectIdentifier
-    var name1: String = ""
-    var name2: String = ""
-    var name3: String = ""
-    
-}
-
-class Model {
-    var items = ["Lasagna", "Fettuccini", "Spaghetti", "Avo toast", "Tortellini", "Pizza"]
-    init(items: [String]) {
-        self.items = items
-    func menuItems() {
-        for item1 in self.items {
-            print(item1)
-        }
-        }
-    }
-}
-
 struct ContentView: View {
-    @State var model1 =  Model(items: <#String#>)
+    @ObservedObject private var model1 =  Model()
+  
     var body: some View {
         VStack {
-            List{
-                Text(model1)
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
+            List  {
+                ForEach(model1.meals) { item in
+                    Text(item.name)}
+                
             }
         }
         .padding()
     }
 }
 
+
+struct Item: Identifiable {
+    var name: String
+    var id = UUID()
+}
+
+
+class Model: ObservableObject {
+    @Published var meals: [Item] = menuItems()
+    
+    
+    static func menuItems() -> [Item]{
+        return [
+            Item(name: "Pacific"),
+            Item(name: "Atlantic"),
+            Item(name: "Indian"),
+            Item(name: "Southern"),
+            Item(name: "Arctic") ]
+    }
+
+}
+    
 
 #Preview {
     ContentView()
